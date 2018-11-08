@@ -2,7 +2,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
+import { QingqiuInterceptor } from "./shared/qingqiu.interceptor";
 
 import { AppComponent } from './app.component';
 import { ContentComponent } from './components/content/content.component';
@@ -22,7 +23,9 @@ import { AppRoutingModule } from './/app-routing.module';
 import { HomeComponent } from './components/home/home.component';
 
 import { ProductService } from "./shared/product.service";
-import { FilterPipe } from './pipe/filter.pipe'
+import { FilterPipe } from './pipe/filter.pipe';
+
+// import {  }s
 
 @NgModule({
   declarations: [
@@ -54,6 +57,14 @@ import { FilterPipe } from './pipe/filter.pipe'
   ],
   providers: [
     ProductService,
+    {
+      // 提供拦截器
+      provide: HTTP_INTERCEPTORS,
+      // 指定拦截器类型
+      useClass: QingqiuInterceptor,
+      // 拦截器被多处使用
+      multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })

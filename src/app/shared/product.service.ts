@@ -2,6 +2,7 @@ import { Injectable, EventEmitter } from '@angular/core';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map, find } from 'rxjs/operators';
+import { Router } from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
@@ -36,7 +37,17 @@ export class ProductService {
 
   constructor(
     private http: HttpClient,
+    public router: Router,
   ) { }
+
+  // 路由跳转
+  gotoUrl(val?) {
+    if(val){
+      this.router.navigate([val])
+    }else {
+      this.router.navigate(["/ProductDetail", 2]);
+    }
+  }
 
   getProducts(): Observable<any>{
     // return this.products;

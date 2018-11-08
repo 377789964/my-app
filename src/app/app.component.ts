@@ -17,6 +17,7 @@ export class AppComponent implements OnInit {
   title = 'app';
 
   dataSourse:Observable<any>;
+  wrongHttp:Observable<any>;
   products:Array<any> = [];
 
   constructor(
@@ -37,6 +38,8 @@ export class AppComponent implements OnInit {
       // map((item) => item.json()),
       // 在比较早的版本下可以使用json(),httpClient中默认就会是JSON响应因此使用的话会报错json不是一个function
     )
+
+    this.wrongHttp = this.http.get("/api/stockkkk", httpOptions)
   }
 
   ngOnInit () {
@@ -44,7 +47,6 @@ export class AppComponent implements OnInit {
     // 只有在订阅的时候上面定义的get请求才会发送了
     this.dataSourse.subscribe(
       (data) => { 
-        console.log(typeof(data));//查看输出数据类型
         console.log(data);
         this.products = data;//对后台返回的数据进行操作
       }    
@@ -69,6 +71,15 @@ export class AppComponent implements OnInit {
     });
 
     
+  }
+
+  wrong() {
+    this.wrongHttp.subscribe(
+      (data) => {},
+      (err) => {
+        console.error("错误被捕获了" + err);
+      }
+    )
   }
 
 }
